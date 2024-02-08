@@ -1,0 +1,19 @@
+
+.card-body{
+    background-color: #0e2238;
+    text-align: center;
+    color: white;
+    border-radius: 1rem;
+}
+.btn{
+    background-color: #18589f;
+    text-align: center;
+}
+.form-control-custom.is-invalid,
+.form-control-custom.is-invalid:focus {
+    border-color: red;
+    box-shadow: 0 0 5px red;
+}
+.label-control-custom.is-invalid{
+    color: #a94444;
+}
