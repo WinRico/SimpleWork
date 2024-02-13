@@ -14,7 +14,7 @@
             </ul>
         </div>
     @endif
-    <form action={{url("/editUser/" . $getRecord->id)}} method="post" novalidate>
+    <form action={{url("/editUser")}} method="post" novalidate>
         @csrf
         <input type="text" name="firstname" placeholder="Ім'я" value="{{$getRecord->firstname}}" class="form-control"><br>
         <input type="text" name="lastname" placeholder="Прізвище" value="{{$getRecord->lastname}}" class="form-control"><br>

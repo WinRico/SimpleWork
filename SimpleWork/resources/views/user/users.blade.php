@@ -11,8 +11,25 @@
     <div class="card h-100">
         <!-- card header  -->
         <div class="card-header bg-white py-4">
-            <h4 class="mb-0"> </h4>
+            <form method="get" action="">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-md-2">
+                            <input type="text" class="form-control" value="{{Request::get('firstname')}}" name="firstname"  placeholder="Ім'я">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <input type="text" class="form-control" value="{{Request::get('lastname')}}" name="lastname"  placeholder="Прізвище">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <button class="btn btn-sm btn-outline-secondary" type="submit">Пошук</button>
+                            <a href="{{route('users')}}" class="btn btn-sm btn-outline-secondary">Очистити</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
         </div>
+
 
         <!-- table  -->
         <div class="table-responsive">
@@ -24,6 +41,8 @@
                     <th>Email</th>
                     <th>Роль</th>
                     <th>Остання активність</th>
+                    <th></th>
+                    <th></th>
                     <th></th>
                 </tr>
                 </thead>
@@ -53,8 +72,8 @@
                         <td class="align-middle" >{{$users->email}}<p class="mb-0"></p></td>
                         <td class="align-middle" >{{$users->getRole($users->roleId)}}<p class="mb-0"></p></td>
                         <td class="align-middle">3 May, 2023</td>
-                        <td class="align-middle"><form method="post" ><button type="button" class="btn btn-sm btn-outline-secondary"><a >Більше</a></button>
-                            </form></td>
+                        <td class="align-middle"><a href="{{url('/infoUser/' . $users->id)}}"  class="btn btn-sm btn-outline-secondary">Більше</a>
+                        </td>
                         <td class="align-middle"><a href="{{url('/editUser/' . $users->id)}}"  class="btn btn-sm btn-outline-secondary">Редагувати</a>
                             </td>
                         <td class="align-middle"><a href="{{url('/deleteUser/' . $users->id)}}" class="btn btn-sm btn-outline-secondary">Видалити</a>
@@ -63,6 +82,15 @@
                 @endforeach
                 </tbody>
             </table>
+            <?php
+            if ($userAll->count() <= 10){
+                ?>
+            <div class="pagination">
+                {!! $userAll->links() !!}
+            </div>
+                <?php
+            }
+            ?>
         </div>
     </div>
 @endsection

@@ -359,3 +359,10 @@ a.sidebar-link:hover {
     box-shadow: none;
     outline: none;
 }
+.pagination{
+    float: right;
+    padding: 10px;
+    margin: auto
+;
+}
+

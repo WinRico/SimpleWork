@@ -4,22 +4,49 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     public function users(){
-        $userAll = User::get()->all();
+        $userAll = User::getUser();
         return view('user.users', compact('userAll'));
     }
     public function addUser(){
         return view('user.addUser');
     }
+    public function userEditProfile($id){
+        $data['getRecord'] = User::getSingle($id);
+        if (!empty($data['getRecord'])){
+            return view('user.userEditProfile',$data);
+        }
+        else{
+            return back();
+        }
+    }
+
+    public function userEditMyProfile(){
+        $data['getRecord'] = User::getSingle(Auth::id());
+        if (!empty($data['getRecord'])) {
+            return view('user.userEditProfile', $data);
+        } else {
+            return back();
+        }
+    }
     public function editUser($id){
         $data['getRecord'] = User::getSingle($id);
         if (!empty($data['getRecord'])){
             return view('user.editUser',$data);
+        }
+        else{
+            return back();
+        }
+    }
+    public function userInfo($id){
+        $data['getRecord'] = User::getSingle($id);
+        if (!empty($data['getRecord'])){
+            return view('user.userInfo',$data);
         }
         else{
             return back();
@@ -51,6 +78,18 @@ class UserController extends Controller
         $review->delete();
         return redirect()->route('users');
     }
+    public static function editPhoto($id,$name){
+        $review = User::getSingle($id);
+        $review->picture = $name;
+        $review->save();
 
+        $data['getRecord'] = User::getSingle($id);
+        if (!empty($data['getRecord'])){
+            return view('user.userInfo',$data);
+        }
+        else{
+            return back();
+        }
+    }
 
 }

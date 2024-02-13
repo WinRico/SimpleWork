@@ -3,6 +3,9 @@
 @section('title_name')Головна сторінка@endsection
 
 @section('main_content')
+    <?php
+use \Illuminate\Support\Facades\Request;
+?>
         <div id="page-content">
             <!-- Container fluid -->
             <div class="bg-primary pt-10 pb-21"></div>
@@ -125,7 +128,21 @@
                             <!-- card header  -->
                             <div class="card-header bg-white  py-4">
                                 <h4 class="mb-0">Активні Проекти</h4>
+
                             </div>
+                            <form method="get" action="">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <input type="text" class="form-control" value="{{Request::get('name')}}" name="name" required placeholder="Назва">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <button class="btn btn-sm btn-outline-secondary" type="submit">Пошук</button>
+                                            <a href="{{route('dashboard')}}" class="btn btn-sm btn-outline-secondary">Очистити</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                             <!-- table  -->
                             <div class="table-responsive">
                                 <table class="table text-nowrap mb-0">
@@ -178,44 +195,57 @@
                                              bg-info ">{{$pro->priority}}</span></td>
                                             <?php
                                              }
+                                            $count = 0
                                                 ?>
+                                           <?php
+                                            if($pro->getUserByProject($pro->id)){
+                                             $count++;
+                                            ?>
                                   <td class="align-middle">
                                       <div class="avatar-group">
                                               <span class="avatar avatar-sm">
-                        <img alt="avatar"
-                             src="assets/images/avatar/avatar-1.jpg"
-                             class="rounded-circle">
-                      </span>
-                                          <span class="avatar avatar-sm">
-                        <img alt="avatar"
-                             src="assets/images/avatar/avatar-2.jpg"
-                             class="rounded-circle">
-                      </span>
-                                          <span class="avatar avatar-sm">
-                        <img alt="avatar"
-                             src="assets/images/avatar/avatar-3.jpg"
-                             class="rounded-circle">
-                      </span>
-                                          <span class="avatar avatar-sm avatar-primary">
-                        <span class="avatar-initials rounded-circle
-                          fs-6">+5</span>
-                                              </span>
+                                                 <img alt="avatar"
+                                                      src="{{asset('storage/news/' . $users->picture)}}"
+                                                      class="rounded-circle">
+                                          </span>
                                       </div>
                                   </td>
+                                            <?php
+                                            }
+                                            ?>
+                                        @endforeach
+                                            <?php
+                                        if($count == 0){
+                                            ?>
+                                            <td class="align-middle">
+                                      <div class="avatar-group">
+                                              <span class="avatar avatar-sm">
+                                                 NULL
+                                          </span>
+                                      </div>
+                                  </td>
+                                        <?php
+                                        }
+                                            ?>
                                   <td class="align-middle text-dark">
                                       <div class="float-start me-3">15%</div>
 
                                   </td>
                               </tr>
-@endforeach
+
                                     </tbody>
                                 </table>
                             </div>
                             <!-- card footer  -->
-                            <div class="card-footer bg-white text-center">
-                                <a href="#" class="link-primary">View All Projects</a>
-
+                            <?php
+                                if ($projectAll->count() <= 3){
+                                ?>
+                            <div class="pagination">
+                                {!! $projectAll->links() !!}
                             </div>
+                                <?php
+                            }
+                                ?>
                         </div>
 
                     </div>

@@ -4,6 +4,7 @@ use App\Http\Controllers\loginController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use App\Models\Picture;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -24,13 +25,16 @@ Route::get('translation', function (\Illuminate\Http\Request $request){
         'hello' => trans('base.hello',[$name],$lang)
         ]);
 });
+Route::get('/infoUser/{id}', [UserController::class, 'userInfo'])->name('userInfo');
 Route::get('/task', [TaskController::class, 'task'])->middleware('auth')->name('task');
-Route::get('/task/add', [TaskController::class, 'addTask'])->middleware('auth');
-Route::post('/task/add', [TaskController::class, 'addTaskMain'])->middleware('auth');
 Route::get('/login', [LoginController::class, 'auth'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 Route::get('/',  [MainController::class, 'dashboard'])->name('dashboard');
+
+
+Route::get('/EditProfile',  [UserController::class, 'userEditMyProfile'])->name('userEditMyProfile');
+Route::post('/edit/photo/{id}',  [Picture::class, 'cutPhoto']);
 Route::group(['middleware' => 'admin'], function (){
     Route::get('/',  [MainController::class, 'dashboard'])->name('dashboard');
     Route::get('/dashboard',  [MainController::class, 'dashboard'])->name('dashboard');
@@ -40,6 +44,10 @@ Route::group(['middleware' => 'admin'], function (){
     Route::get('/editUser/{id}',  [UserController::class, 'editUser'])->name('editUser');
     Route::post('/editUser/{id}',  [UserController::class, 'editUserMain']);
     Route::get('/deleteUser/{id}',  [UserController::class, 'deleteUser'])->name('deleteUser');
+    Route::get('/EditProfile/{id}',  [UserController::class, 'userEditProfile'])->name('userEditProfile');
+
+    Route::get('/task/add', [TaskController::class, 'addTask']);
+    Route::post('/task/add', [TaskController::class, 'addTaskMain']);
     Route::get('/edit/task/{id}',  [TaskController::class, 'editTask'])->name('editTask');
     Route::post('/edit/task/{id}',  [TaskController::class, 'editTaskMain']);
     Route::get('/delete/task/{id}',  [TaskController::class, 'deleteTask'])->name('deleteTask');

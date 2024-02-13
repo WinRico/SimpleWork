@@ -12,7 +12,9 @@ class TaskController extends Controller{
         return view('task.task_add');
     }
     public function task(){
-        $task = Task::get();
+
+        $task = Task::getTask();
+
         return view('task.task_main', compact('task'));
     }
 

@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Request;
 
 /**
  * @property int $id
@@ -26,6 +28,17 @@ class Task extends Model
     use HasFactory;
     public $timestamps = false;
 
+    public function user()
+    {
+        return $this->belongsTo(User::class,'userId');
+    }
+    static public function getTask(){
+        $return = Task::where('userId',null)->paginate(5);
+        if (!empty(Request::get('name'))){
+            $return = Task::get()->where('name','=',Request::get('name'));
+        }
+        return $return;
+    }
     static public function getSingle($id)
     {
         return self::find($id);

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Request;
 use PhpParser\ErrorHandler\Collecting;
 use Ramsey\Collection\Collection;
 
@@ -20,12 +21,13 @@ use Ramsey\Collection\Collection;
 class Project extends Model
 {
     use HasFactory;
+    protected $table = 'projects';
     public $timestamps = false;
 
 
     public function task(): HasMany{
 
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Task::class, 'projectId');
     }
     public static function isFinish(){
         return Project::where('statusId', 2)->count();
@@ -35,4 +37,23 @@ class Project extends Model
         $isFinish = self::isFinish();
         return $isFinish * 100 / $all;
     }
+    static public function getProject(){
+       $return = Project::paginate(3);
+        if (!empty(Request::get('name'))){
+            $return = Project::get()->where('name','=',Request::get('name'));
+        }
+        return $return;
+    }
+    public function getUserByProject($projectId)
+    {
+        $project = Project::find($projectId);
+
+        $tasks = $project->task;
+        foreach ($tasks as $task) {
+            $executor = $task->user;
+            return $executor;
+        }
+        return null;
+    }
+
 }

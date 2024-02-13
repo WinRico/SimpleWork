@@ -14,9 +14,9 @@
 </head>
 
 <body>
+<div class="wrapper">
+        <aside id="sidebar">
         @if(Auth::user()->roleId == 5)
-            <div class="wrapper">
-                <aside id="sidebar">
                     <div class="d-flex">
                         <button class="toggle-btn" type="button">
                             <i class="lni lni-grid-alt"></i>
@@ -25,34 +25,16 @@
                             <a href="{{route('dashboard')}}">SimpleWork</a>
                         </div>
                     </div>
-            <div class="d-flex">
-                <button class="toggle-btn" type="button">
-                    <i class="lni lni-grid-alt"></i>
-                </button>
-                <div class="sidebar-logo">
-                    <a href="">Адмін</a>
-                </div>
-            </div>
-
-            <ul class="sidebar-nav">
-                <li class="sidebar-item">
-                    <a href="{{route('users')}}" class="sidebar-link">
-                        <i class="lni lni-user"></i>
-                        <span>Користувачі</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="task" class="sidebar-link">
-                        <i class="lni lni-agenda"></i>
-                        <span>Завдання</span>
-                    </a>
-                </li>
-
-            </ul>
-
+                    <div class="d-flex">
+                        <button class="toggle-btn" type="button">
+                            <img src="{{asset('storage/news/' . Auth::user()->picture)}}"
+                                 class="rounded-circle me-n2" alt="avatar 1" style="width: 30px;border-radius: 1px; border-color: #3b7ddd">
+                        </button>
+                        <div class="sidebar-logo">
+                            <a href="{{route('userEditMyProfile')}}"> <span class="ms-2">Адмін</span></a>
+                        </div>
+                    </div>
         @elseif(Auth::user()->roleId >= 1 && Auth::user()->roleId  < 5)
-                        <div class="wrapper">
-                            <aside id="sidebar">
                                 <div class="d-flex">
                                     <button class="toggle-btn" type="button">
                                         <i class="lni lni-grid-alt"></i>
@@ -63,36 +45,47 @@
                                 </div>
             <div class="d-flex">
                 <button class="toggle-btn" type="button">
-                    <i class="lni lni-grid-alt"></i>
+                    <img src="{{asset('storage/news/' . Auth::user()->picture)}}"
+                         class="rounded-circle" alt="avatar 1" style="width: 35px; border-radius: 1px; border-color: #3b7ddd">
                 </button>
                 <div class="sidebar-logo">
-                    <a href="">{{Auth::user()->firstname . ' ' . Auth::user()->lastname . '  '}}</a>
+                    <a href="{{route('userEditMyProfile')}}"> <span class="ms-2">{{Auth::user()->firstname . ' ' . Auth::user()->lastname . '  '}}</span></a>
                 </div>
             </div>
-
-            <ul class="sidebar-nav">
-                <li class="sidebar-item">
-                    <a href="/" class="sidebar-link">
-                        <i class="lni lni-user"></i>
-                        <span>Головна</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="task" class="sidebar-link">
-                        <i class="lni lni-agenda"></i>
-                        <span>Завдання</span>
-                    </a>
-                </li>
-            </ul>
-
         @endif
+                                <ul class="sidebar-nav">
+                                    <li class="sidebar-item">
+                                        <a href="/" class="sidebar-link">
+                                            <i class="lni lni-home"></i>
+                                            <span>Головна</span>
+                                        </a>
+                                    </li>
+                                    @if(Auth::user()->roleId == 5)
+                                        <ul class="sidebar-nav">
+                                            <li class="sidebar-item">
+                                                <a href="{{route('users')}}" class="sidebar-link">
+                                                    <i class="lni lni-user"></i>
+                                                    <span>Користувачі</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    @endif
+                                    <li class="sidebar-item">
+                                        <a href="task" class="sidebar-link">
+                                            <i class="lni lni-agenda"></i>
+                                            <span>Завдання</span>
+                                        </a>
+                                    </li>
+                                </ul>
                                 <div class="sidebar-footer">
                                     <a href="{{route('logout')}}" class="sidebar-link">
                                         <i class="lni lni-exit"></i>
                                         <span>Вихід</span>
                                     </a>
                                 </div>
-    </aside>
+        </aside>
+
+
     <div class="main p-3">
         @yield('main_content')
     </div>
@@ -101,6 +94,10 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
 <script src="{{URL::asset('js/script.js') }}" ></script>
+<script>
+    import {VueEditor} from "vue2-editor";
+</script>
+
 </body>
 
 </html>
