@@ -195,44 +195,39 @@ use \Illuminate\Support\Facades\Request;
                                              bg-info ">{{$pro->priority}}</span></td>
                                             <?php
                                              }
-                                            $count = 0
-                                                ?>
-                                           <?php
-                                            if($pro->getUserByProject($pro->id)){
-                                             $count++;
+                                             ?>
+
+                                        <td class="align-middle">
+                                            <div class="avatar-group">
+                                        <?php
+                                            $count = 0;
+                                            if ($count < 4){
                                             ?>
-                                  <td class="align-middle">
-                                      <div class="avatar-group">
+                                        @if(isset($pro->task))
+                                            @foreach($pro->task as $task)
+                                                @if(isset($task->user))
+                                                                <?php
+                                                                $count++;
+                                                                ?>
                                               <span class="avatar avatar-sm">
                                                  <img alt="avatar"
-                                                      src="{{asset('storage/news/' . $users->picture)}}"
-                                                      class="rounded-circle">
+                                                      src="{{asset('storage/news/' . $task->user->picture)}}"
+                                                      class="rounded-circle" alt="avatar 1" style="width: 35px; border-radius: 1px; border-color: #3b7ddd">
                                           </span>
-                                      </div>
-                                  </td>
-                                            <?php
-                                            }
-                                            ?>
+                                                @endif
+                                            @endforeach
+
+                                                @endif
+                                            </div>
+                                        </td>
+                                        @if(isset($pro->task))
+                                        <td class="align-middle text-dark">
+                                            <div class="float-start me-3">{{$task->percentOfProjectProductivity($pro->id)}}%</div>
+
+                                        </td>
+                                                @endif
                                         @endforeach
-                                            <?php
-                                        if($count == 0){
-                                            ?>
-                                            <td class="align-middle">
-                                      <div class="avatar-group">
-                                              <span class="avatar avatar-sm">
-                                                 NULL
-                                          </span>
-                                      </div>
-                                  </td>
-                                        <?php
-                                        }
-                                            ?>
-                                  <td class="align-middle text-dark">
-                                      <div class="float-start me-3">15%</div>
-
-                                  </td>
-                              </tr>
-
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -294,6 +289,7 @@ use \Illuminate\Support\Facades\Request;
                                         <i class="icon-sm text-warning" data-feather="trending-up"></i>
                                         <h1 class="mt-3  mb-1 fw-bold"><text>{{$task->taskInProgres()}}</text>%</h1>
                                         <p>В процесі</p>
+
                                     </div>
 
                                 </div>
@@ -321,7 +317,7 @@ use \Illuminate\Support\Facades\Request;
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($userAll as $users)
+                                    @foreach($userAll as $user)
                                     <tr>
                                         <td class="align-middle">
                                             <div class="d-flex align-items-center">
@@ -329,7 +325,7 @@ use \Illuminate\Support\Facades\Request;
                                                     <img src="assets/images/avatar/avatar-2.jpg" alt="" class="avatar-md avatar rounded-circle">
                                                 </div>
                                                 <div class="ms-3 lh-1">
-                                                    <h5 class=" mb-1"><text >{{$users->firstname}}</text></h5>
+                                                    <h5 class=" mb-1"><text >{{$user->firstname}}</text></h5>
                                                 </div>
                                             </div>
                                         </td>
@@ -339,13 +335,13 @@ use \Illuminate\Support\Facades\Request;
                                                     <img src="assets/images/avatar/avatar-2.jpg" alt="" class="avatar-md avatar rounded-circle">
                                                 </div>
                                                 <div class="ms-3 lh-1">
-                                                    <h5 class=" mb-1"><text >{{$users->lastname}}</text></h5>
+                                                    <h5 class=" mb-1"><text >{{$user->lastname}}</text></h5>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="align-middle" >{{$users->email}}<p class="mb-0"></p></td>
-                                        <td class="align-middle" >{{$users->getRole($users->roleId)}}<p class="mb-0"></p></td>
-                                        <td class="align-middle">3 May, 2023</td>
+                                        <td class="align-middle" >{{$user->email}}<p class="mb-0"></p></td>
+                                        <td class="align-middle" >{{$user->role->role}}<p class="mb-0"></p></td>
+                                        <td class="align-middle">3 May 2023</td>
                                         <td class="align-middle">
                                             <div class="dropdown dropstart">
                                                 <a class="text-muted text-primary-hover" href="#" role="button" id="dropdownTeamOne" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

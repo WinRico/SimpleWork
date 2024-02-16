@@ -56,9 +56,9 @@
                         </div>
                     </div>
                 </td>
-                <td class="align-middle" ><p class="mb-0" >{{$el->getPriority($el->projectId)}}</p></td>
-                <td class="align-middle"><p class="mb-0">{{$el->getDeadLine($el->projectId)}}</p></td>
-                <td class="align-middle"><p class="mb-0" >{{$el->getCategory($el->categoryId)}}</p></td>
+                <td class="align-middle" ><p class="mb-0" >{{$el->project->priority}}</p></td>
+                <td class="align-middle"><p class="mb-0">{{$el->project->hour}}</p></td>
+                <td class="align-middle"><p class="mb-0" >{{$el->category->name}}</p></td>
                 <td class="align-middle"><button type="button" class="btn btn-sm btn-outline-secondary"><a >Більше</a></button>
                 </td>
                 @if(Auth::user()->roleId == 5)

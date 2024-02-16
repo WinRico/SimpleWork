@@ -28,9 +28,14 @@ class Task extends Model
     use HasFactory;
     public $timestamps = false;
 
-    public function user()
-    {
+    public function user(){
         return $this->belongsTo(User::class,'userId');
+    }
+    public function project(){
+        return $this->belongsTo(Project::class,'projectId');
+    }
+    public function category(){
+        return $this->belongsTo(Category::class,'categoryId');
     }
     static public function getTask(){
         $return = Task::where('userId',null)->paginate(5);
@@ -39,13 +44,13 @@ class Task extends Model
         }
         return $return;
     }
-    static public function getSingle($id)
-    {
+    static public function getSingle($id){
         return self::find($id);
     }
-    public  function getPriority($id){
+    public  function getUser(){
 
-        $file = Project::find($id);
+        $file = User::find('userId');
+        dd($file);
 
         $path = (string) $file->priority;
 
@@ -74,6 +79,16 @@ class Task extends Model
         $all = Task::all()->count();
         $isFinish = Task::where('statusId', 2)->count();
         return round($isFinish * 100 / $all);
+
+    }
+    public static function percentOfProjectProductivity($id){
+        $all = Task::all()->where('projectId', $id);
+        $isFinish = $all->where('statusId', 2)->count();
+        if ($all->count() != 0) {
+            return round($isFinish * 100 / $all->count());
+        } else {
+            return 0; // або будь-яке інше значення за замовчуванням
+        }
 
     }
     public static function taskInProgres(){

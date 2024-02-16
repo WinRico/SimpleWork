@@ -86,7 +86,7 @@
         </aside>
 
 
-    <div class="main p-3">
+    <div class="container" style="margin-top: 1lh">
         @yield('main_content')
     </div>
 </div>

@@ -30,13 +30,12 @@ Route::get('/task', [TaskController::class, 'task'])->middleware('auth')->name('
 Route::get('/login', [LoginController::class, 'auth'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
-Route::get('/',  [MainController::class, 'dashboard'])->name('dashboard');
 
+Route::get('/',  [MainController::class, 'dashboard'])->name('dashboard');
 
 Route::get('/EditProfile',  [UserController::class, 'userEditMyProfile'])->name('userEditMyProfile');
 Route::post('/edit/photo/{id}',  [Picture::class, 'cutPhoto']);
 Route::group(['middleware' => 'admin'], function (){
-    Route::get('/',  [MainController::class, 'dashboard'])->name('dashboard');
     Route::get('/dashboard',  [MainController::class, 'dashboard'])->name('dashboard');
     Route::get('/users',  [UserController::class, 'users'])->name('users');
     Route::get('/addUser',  [UserController::class, 'addUser'])->name('addUser');
@@ -53,7 +52,6 @@ Route::group(['middleware' => 'admin'], function (){
     Route::get('/delete/task/{id}',  [TaskController::class, 'deleteTask'])->name('deleteTask');
 });
 Route::group(['middleware' => 'Member'], function (){
-    Route::get('/',  [MainController::class, 'memberDashboard'])->name('memberDashboard');
     Route::get('/memberDashboard',  [MainController::class, 'memberDashboard'])->name('memberDashboard');
 });
 
