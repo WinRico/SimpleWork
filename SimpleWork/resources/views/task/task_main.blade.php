@@ -6,9 +6,13 @@
     <?php
     use \Illuminate\Support\Facades\Auth;
         ?>
-    <div>
-        <a href="task/add" style="margin-bottom: 4px" class="btn btn-sm btn-outline-secondary">Додати завдання</a>
-    </div>
+
+
+    @if(Auth::user()->roleId == 5)
+        <div>
+            <a href="task/add" style="margin-bottom: 4px" class="btn btn-sm btn-outline-secondary">Додати завдання</a>
+        </div>
+    @endif
     <div class="col-xl-12 col-lg-12 col-md-12 col-12">
         <div class="card h-100">
             <!-- card header  -->
@@ -59,7 +63,7 @@
                 <td class="align-middle" ><p class="mb-0" >{{$el->project->priority}}</p></td>
                 <td class="align-middle"><p class="mb-0">{{$el->project->hour}}</p></td>
                 <td class="align-middle"><p class="mb-0" >{{$el->category->name}}</p></td>
-                <td class="align-middle"><button type="button" class="btn btn-sm btn-outline-secondary"><a >Більше</a></button>
+                <td class="align-middle"><a href="{{url('/info/task/' . $el->id)}}"  class="btn btn-sm btn-outline-secondary">Більше</a>
                 </td>
                 @if(Auth::user()->roleId == 5)
                 <td class="align-middle"><a href="{{url('/edit/task/' . $el->id)}}"  class="btn btn-sm btn-outline-secondary">Редагувати</a>

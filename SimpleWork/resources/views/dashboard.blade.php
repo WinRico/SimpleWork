@@ -10,13 +10,14 @@ use \Illuminate\Support\Facades\Request;
             <!-- Container fluid -->
             <div class="bg-primary pt-10 pb-21"></div>
             <div class="container-fluid mt-n22 px-6">
+
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-12">
                         <!-- Page header -->
                         <div>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <a href="#" style="margin-bottom: 4px" class="btn btn-sm btn-outline-secondary">Create New Project</a>
+                                    <a href="#" style="margin-bottom: 4px" class="btn btn-sm btn-outline-secondary">Створити Новий Проект</a>
                                 </div>
                             </div>
                         </div>
@@ -199,16 +200,10 @@ use \Illuminate\Support\Facades\Request;
 
                                         <td class="align-middle">
                                             <div class="avatar-group">
-                                        <?php
-                                            $count = 0;
-                                            if ($count < 4){
-                                            ?>
                                         @if(isset($pro->task))
                                             @foreach($pro->task as $task)
                                                 @if(isset($task->user))
-                                                                <?php
-                                                                $count++;
-                                                                ?>
+
                                               <span class="avatar avatar-sm">
                                                  <img alt="avatar"
                                                       src="{{asset('storage/news/' . $task->user->picture)}}"
@@ -317,7 +312,9 @@ use \Illuminate\Support\Facades\Request;
                                     </tr>
                                     </thead>
                                     <tbody>
+
                                     @foreach($userAll as $user)
+                                        @if($user->roleId != 6)
                                     <tr>
                                         <td class="align-middle">
                                             <div class="d-flex align-items-center">
@@ -356,6 +353,7 @@ use \Illuminate\Support\Facades\Request;
                                             </div>
                                         </td>
                                     </tr>
+                                        @endif
                                     @endforeach
                                     </tbody>
                                 </table>

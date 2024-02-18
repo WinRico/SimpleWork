@@ -52,6 +52,24 @@
                     <a href="{{route('userEditMyProfile')}}"> <span class="ms-2">{{Auth::user()->firstname . ' ' . Auth::user()->lastname . '  '}}</span></a>
                 </div>
             </div>
+            @elseif(Auth::user()->roleId  == 6)
+                <div class="d-flex">
+                    <button class="toggle-btn" type="button">
+                        <i class="lni lni-grid-alt"></i>
+                    </button>
+                    <div class="sidebar-logo">
+                        <a href="{{route('freeDashboard')}}">SimpleWork</a>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <button class="toggle-btn" type="button">
+                        <img src="{{asset('storage/news/' . Auth::user()->picture)}}"
+                             class="rounded-circle" alt="avatar 1" style="width: 35px; border-radius: 1px; border-color: #3b7ddd">
+                    </button>
+                    <div class="sidebar-logo">
+                        <a href="{{route('userEditMyProfile')}}"> <span class="ms-2">{{Auth::user()->firstname . ' ' . Auth::user()->lastname . '  '}}</span></a>
+                    </div>
+                </div>
         @endif
                                 <ul class="sidebar-nav">
                                     <li class="sidebar-item">
@@ -70,12 +88,23 @@
                                             </li>
                                         </ul>
                                     @endif
+                                    @if(Auth::user()->roleId != 5)
+                                        <ul class="sidebar-nav">
+                                            <li class="sidebar-item">
+                                                <a href="{{route('myTask')}}" class="sidebar-link">
+                                                    <i class="lni lni-agenda"></i>
+                                                    <span>Мої завдання</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    @endif
                                     <li class="sidebar-item">
                                         <a href="task" class="sidebar-link">
                                             <i class="lni lni-agenda"></i>
                                             <span>Завдання</span>
                                         </a>
                                     </li>
+
                                 </ul>
                                 <div class="sidebar-footer">
                                     <a href="{{route('logout')}}" class="sidebar-link">

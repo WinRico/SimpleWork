@@ -24,6 +24,8 @@ class LoginController extends Controller
                 return redirect(route('dashboard'));
             } else if (Auth::user()->roleId >= 1 && Auth::user()->roleId < 5) {
                 return redirect(route('memberDashboard'));
+            } else if (Auth::user()->roleId == 6) {
+                return redirect(route('freeDashboard'));
             }
 
         }

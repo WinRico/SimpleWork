@@ -4,18 +4,43 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Http\Requests\TaskRequest;
+use Illuminate\Support\Facades\Auth;
 
 
 class TaskController extends Controller{
 
     public function addTask(){
+
         return view('task.task_add');
     }
     public function task(){
-
+    if (Auth::user()->roleId == 5 || Auth::user()->roleId < 5 && Auth::user()->roleId >= 1) {
         $task = Task::getTask();
-
         return view('task.task_main', compact('task'));
+    }
+
+    else if (Auth::user()->roleId == 6){
+        $task = Task::getTask()->where('categoryId',6);
+        return view('openSource.openTask', compact('task'));
+    }
+    return back();
+    }
+    public function myTask()
+    {
+        if (Auth::user()->roleId < 5 && Auth::user()->roleId >= 1) {
+            $task = Task::getMyTask();
+            return view('task.myTask', compact('task'));
+        }
+        return back();
+    }
+    public function infoTask($id){
+        $data['infoTask'] = Task::getSingle($id);
+        if (!empty($data['infoTask'])){
+            return view('task.taskInfo',$data);
+        }
+        else{
+            return back();
+        }
     }
 
     public function editTask($id){

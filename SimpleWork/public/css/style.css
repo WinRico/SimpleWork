@@ -30,6 +30,184 @@ body {
 .contend{
 
 }
+.filter-invert-white {
+    filter: brightness(0) invert(1); }
+
+.filter-invert-dark {
+    filter: brightness(0) invert(0); }
+
+.bg-gray-400 {
+    background-color: #ced4da; }
+
+.smooth-shadow-sm {
+    box-shadow: 0px 2px 4px rgba(0, 0, 20, 0.08), 0px 1px 2px rgba(0, 0, 20, 0.08) !important; }
+
+.smooth-shadow-md {
+    box-shadow: 0 1px 2px rgba(21, 30, 40, 0.07), 0 2px 4px rgba(21, 30, 40, 0.07), 0 4px 8px rgba(21, 30, 40, 0.07), 0 8px 16px rgba(21, 30, 40, 0.07), 0 16px 32px rgba(21, 30, 40, 0.07), 0 32px 64px rgba(21, 30, 40, 0.07) !important; }
+
+.smooth-shadow-lg {
+    box-shadow: 0 1px 1px rgba(21, 30, 40, 0.11), 0 2px 2px rgba(21, 30, 40, 0.11), 0 4px 4px rgba(21, 30, 40, 0.11), 0 8px 8px rgba(21, 30, 40, 0.11), 0 16px 16px rgba(21, 30, 40, 0.11), 0 32px 32px rgba(21, 30, 40, 0.11) !important; }
+
+.bg-primary {
+    background-color: #624BFF !important; }
+
+.bg-secondary {
+    background-color: #6c757d !important; }
+
+.bg-success {
+    background-color: #198754 !important; }
+
+.bg-info {
+    background-color: #0dcaf0 !important; }
+
+.bg-warning {
+    background-color: #ffc107 !important; }
+
+.bg-danger {
+    background-color: #dc3545 !important; }
+
+.bg-light {
+    background-color: #f8f9fa !important; }
+
+.bg-dark {
+    background-color: #212529 !important; }
+
+.bg-white {
+    background-color: #fff !important; }
+
+.bg-light-primary {
+    background-color: #E0DCFE !important; }
+
+.bg-light-danger {
+    background-color: #FBEBEC !important; }
+
+.bg-light-info {
+    background-color: #E7FAFE !important; }
+
+.bg-light-warning {
+    background-color: #FFF3CD !important; }
+
+.bg-light-secondary {
+    background-color: #e9ecef !important; }
+
+.bg-light-success {
+    background-color: #EAF6EC !important; }
+
+.bg-light-dark {
+    background-color: #d1cfd8 !important; }
+
+.bg-dark-primary {
+    background-color: #593cc1 !important; }
+
+.bg-dark-warning {
+    background-color: #c28135 !important; }
+
+.bg-dark-info {
+    background-color: #51a0c2 !important; }
+
+.bg-dark-danger {
+    background-color: #ae302e !important; }
+
+.bg-dark-success {
+    background-color: #139a74 !important; }
+
+.bg-dark-secondary {
+    background-color: #5c596d !important; }
+
+.bg-gray-100 {
+    background-color: #f8f9fa !important; }
+
+.bg-gray-200 {
+    background-color: #e9ecef !important; }
+
+.bg-gray-300 {
+    background-color: #dee2e6 !important; }
+
+.bg-gray-400 {
+    background-color: #ced4da !important; }
+
+.bg-gray-500 {
+    background-color: #adb5bd !important; }
+
+.bg-gray-600 {
+    background-color: #6c757d !important; }
+
+.bg-gray-700 {
+    background-color: #495057 !important; }
+
+.bg-gray-800 {
+    background-color: #343a40 !important; }
+
+.bg-gray-900 {
+    background-color: #212529 !important; }
+
+.bg-body {
+    background-color: #e9ecef !important; }
+
+.bg-transparent {
+    background-color: transparent !important; }
+
+
+.border-white-color-40 {
+    border-color: rgba(233, 236, 239, 0.4) !important; }
+
+.border-dashed {
+    border: 1px dashed #dee2e6 !important; }
+
+.divider {
+    display: flex;
+    align-items: center; }
+.divider::after, .divider::before {
+    flex: 1 1 0%;
+    border-top: 0.0625rem solid #ced4da;
+    content: "";
+    margin-top: .0625rem; }
+.divider::before {
+    margin-right: 1.5rem; }
+.divider::after {
+    margin-left: 1.5rem; }
+
+.icon-xxs {
+    width: 0.875rem;
+    height: 0.875rem;
+    line-height: 0.875rem; }
+
+.icon-xs {
+    width: 1rem;
+    height: 1rem;
+    line-height: 1rem; }
+
+.icon-sm {
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem; }
+
+.icon-md {
+    width: 2.5rem;
+    height: 2.5rem;
+    line-height: 2.5rem; }
+
+.icon-lg {
+    width: 3rem;
+    height: 3rem;
+    line-height: 3rem; }
+
+.icon-xl {
+    width: 3.5rem;
+    height: 3.5rem;
+    line-height: 3.5rem; }
+
+.icon-xxl {
+    width: 4rem;
+    height: 4rem;
+    line-height: 4rem; }
+
+.icon-shape {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle; }
 .main {
     min-height: 100vh;
     width: 100%;

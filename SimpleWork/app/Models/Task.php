@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 
 /**
@@ -44,36 +45,29 @@ class Task extends Model
         }
         return $return;
     }
+    static public function getMyTask(){
+        $return = Task::where('userId',Auth::user()->id)->paginate(5);
+        if (!empty(Request::get('name'))){
+            $return = Task::get()->where('name','=',Request::get('name'));
+        }
+        return $return;
+    }
     static public function getSingle($id){
         return self::find($id);
     }
-    public  function getUser(){
 
-        $file = User::find('userId');
-        dd($file);
-
-        $path = (string) $file->priority;
-
-        return $path;
-    }
-    public  function getDeadLine($id){
-
-        $file = Project::find($id);
-
-        $path = date($file->hour);
-
-        return $path;
-    }
-    public  function getCategory($id){
-
-        $file = Category::find($id);
-
-        $path = (string) $file->name;
-
-        return $path;
-    }
     public static function isFinish(){
         return Project::where('statusId', 2)->count();
+    }
+
+    public static function UserTaskIsFinish($id){
+        $all = Task::all()->where('userId', $id);
+        $isFinish = $all->where('statusId', 2)->count();
+        if ($all->count() != 0) {
+            return $isFinish;
+        } else {
+            return 0; // або будь-яке інше значення за замовчуванням
+        }
     }
     public static function percentProductivity(){
         $all = Task::all()->count();

@@ -11,19 +11,19 @@ use Illuminate\Support\Facades\Auth;
 
 class MainController extends Controller
 {
-    public function dashboard(){
+    public function dashboard()
+    {
 
-        $task =new Task();
-        $project= new Project();
-        $user = new User();
+        $task = new Task();
+        $project = new Project();
+        $user = User::get()->where('roleId','!=', 6);
         $projectAll = Project::getProject();
         $userAll = User::get();
-        if (Auth::user()->roleId == 5){
-            return view('dashboard',compact('task','project','user', 'projectAll','userAll'));
-        }else{
-            return view('memberDashboard',compact('task','project','user', 'projectAll','userAll'));
-
+        if (Auth::user()->roleId == 5) {
+            return view('dashboard', compact('task', 'project', 'user', 'projectAll', 'userAll'));
+        } else if (Auth::user()->roleId >= 1 && Auth::user()->roleId < 5) {
+            return view('memberDashboard', compact('task', 'project', 'user', 'projectAll', 'userAll'));
         }
-
+        return back();
     }
 }

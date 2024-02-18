@@ -8,19 +8,7 @@
         <div class="bg-primary pt-10 pb-21"></div>
         <div class="container-fluid mt-n22 px-6">
             <div class="row">
-                <div class="col-lg-12 col-md-12 col-12">
-                    <!-- Page header -->
-                    <div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="mb-2 mb-lg-0">
-                                <h3 class="mb-0  text-white">Projects</h3>
-                            </div>
-                            <div>
-                                <a href="#" class="btn btn-white">Create New Project</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
                     <!-- card -->
                     <div class="card " >
@@ -54,7 +42,7 @@
                             <div class="d-flex justify-content-between align-items-center
                     mb-3">
                                 <div>
-                                    <h4 class="mb-0">Активні завдання</h4>
+                                    <h4 class="mb-0">Мої завдання</h4>
                                 </div>
                                 <div class="icon-shape icon-md bg-light-primary text-primary
                       rounded-2">
@@ -63,8 +51,8 @@
                             </div>
                             <!-- project number -->
                             <div>
-                                <h1 class="fw-bold" >{{$task->all()->count()}}</h1>
-                                <p class="mb-0" ><span class="text-dark me-2">{{$task->isFinish()}}</span>Виконано</p>
+                                <h1 class="fw-bold" >{{$task->all()->where('userId',Auth::user()->id)->count()}}</h1>
+                                <p class="mb-0" ><span class="text-dark me-2">{{$task->UserTaskIsFinish(Auth::user()->id)}}</span>Виконано</p>
                             </div>
                         </div>
                     </div>
@@ -128,7 +116,21 @@
                         <!-- card header  -->
                         <div class="card-header bg-white  py-4">
                             <h4 class="mb-0">Активні Проекти</h4>
+
                         </div>
+                        <form method="get" action="">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-md-3">
+                                        <input type="text" class="form-control" value="{{Request::get('name')}}" name="name" required placeholder="Назва">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <button class="btn btn-sm btn-outline-secondary" type="submit">Пошук</button>
+                                        <a href="{{route('dashboard')}}" class="btn btn-sm btn-outline-secondary">Очистити</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                         <!-- table  -->
                         <div class="table-responsive">
                             <table class="table text-nowrap mb-0">
@@ -182,39 +184,47 @@
                                             <?php
                                         }
                                             ?>
+
                                         <td class="align-middle">
                                             <div class="avatar-group">
-                                              <span class="avatar avatar-sm">
-                        <img alt="avatar"
-                             src="assets/images/avatar/avatar-1.jpg"
-                             class="rounded-circle">
-                      </span>
-                                                <span class="avatar avatar-sm">
-                        <img alt="avatar"
-                             src="assets/images/avatar/avatar-2.jpg"
-                             class="rounded-circle">
-                      </span>
-                                                <span class="avatar avatar-sm">
-                        <img alt="avatar"
-                             src="assets/images/avatar/avatar-3.jpg"
-                             class="rounded-circle">
-                      </span>
-                                                <span class="avatar avatar-sm avatar-primary">
-                        <span class="avatar-initials rounded-circle
-                          fs-6">+5</span>
-                                              </span>
+                                                @if(isset($pro->task))
+                                                    @foreach($pro->task as $task)
+                                                        @if(isset($task->user))
+
+                                                            <span class="avatar avatar-sm">
+                                                 <img alt="avatar"
+                                                      src="{{asset('storage/news/' . $task->user->picture)}}"
+                                                      class="rounded-circle" alt="avatar 1" style="width: 35px; border-radius: 1px; border-color: #3b7ddd">
+                                          </span>
+                                                        @endif
+                                                    @endforeach
+
+                                                @endif
                                             </div>
                                         </td>
-                                        <td class="align-middle text-dark">
-                                            <div class="float-start me-3">15%</div>
+                                        @if(isset($pro->task))
+                                            <td class="align-middle text-dark">
+                                                <div class="float-start me-3">{{$task->percentOfProjectProductivity($pro->id)}}%</div>
 
-                                        </td>
+                                            </td>
+                                        @endif
+                                        @endforeach
                                     </tr>
-                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
+                        <!-- card footer  -->
+                        <?php
+                        if ($projectAll->count() <= 3){
+                            ?>
+                        <div class="pagination">
+                            {!! $projectAll->links() !!}
+                        </div>
+                            <?php
+                        }
+                        ?>
                     </div>
+
                 </div>
             </div>
-        </div>
-    </div>
 @endsection

@@ -23,13 +23,6 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo(Role::class,'roleId');
     }
-    public  function getRole($id){
-
-        $file = Role::find($id);
-        $path = (string) $file->role;
-
-        return $path;
-    }
     static public function getSingle($id)
     {
         return self::find($id);
