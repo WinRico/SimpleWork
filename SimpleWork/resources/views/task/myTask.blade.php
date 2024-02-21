@@ -57,14 +57,14 @@
                             <td class="align-middle" ><p class="mb-0" >{{$el->project->priority}}</p></td>
                             <td class="align-middle"><p class="mb-0">{{$el->project->hour}}</p></td>
                             <td class="align-middle"><p class="mb-0" >{{$el->category->name}}</p></td>
-                            <td class="align-middle"><button type="button" class="btn btn-sm btn-outline-secondary"><a >Більше</a></button>
+                            <td class="align-middle"><a href="{{url('/info/task/' . $el->id)}}"  class="btn btn-sm btn-outline-secondary">Більше</a>
                             </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
                 <?php
-                if ($task->count() <= 5){
+                if ($task->count() >= 5){
                     ?>
                 <div class="pagination">
                     {!! $task->links() !!}

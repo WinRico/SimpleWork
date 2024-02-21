@@ -12,8 +12,8 @@
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body p-5">
-                        <div class="d-flex flex-column align-items-center text-center">
-                            <img src="{{asset('storage/news/' . $getRecord->picture)}}" alt="Admin" class="rounded-circle p-1 bg-primary" width="160">
+                        <div class="d-flex flex-column align-items-center text-center" >
+                            <img src="{{asset('storage/news/' . $getRecord->picture)}}" alt="Admin"  style="height: 180px;width: 180px;border-radius: 180px" class="img-circle elevation-2">
                             <div class="mt-3">
                                 <form action="{{url('/edit/photo/' . $getRecord->id)}}" method="post" enctype="multipart/form-data" >
                                     @csrf
@@ -21,7 +21,7 @@
                                     <input type="submit" value="Поміняти">
                                 </form>
                                 <h4>{{$getRecord->firstname}}</h4>
-                                <p class="text-secondary mb-1">{{$getRecord->getRole($getRecord->roleId)}}</p>
+                                <p class="text-secondary mb-1">{{$getRecord->role->role}}</p>
                                 <p class="text-muted font-size-sm"></p>
                                 <button class="btn btn-outline-primary">Message</button>
                             </div>

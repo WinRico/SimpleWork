@@ -4,96 +4,165 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 
-/**
- * @property int $id
- * @property string $name
- * @property string $full_text
- * @property string $title
- * @property string $namedCompany
- * @property int $statusId
- * @property data $data_add
- * @property data $dead_start_work
- * @property data $deadUpdate
- * @property int $projectId
- * @property int $categoryId
- * @property int $userId
- * @property Project $project
- */
 class Task extends Model
 {
     use HasFactory;
+
+    // Disable timestamps for this model
     public $timestamps = false;
 
-    public function user(){
-        return $this->belongsTo(User::class,'userId');
+    /**
+     * Define a relationship between Task and User models.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        // Define a many-to-one relationship where a task belongs to a user
+        return $this->belongsTo(User::class, 'userId');
     }
-    public function project(){
-        return $this->belongsTo(Project::class,'projectId');
+
+    /**
+     * Define a relationship between Task and Project models.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function project()
+    {
+        // Define a many-to-one relationship where a task belongs to a project
+        return $this->belongsTo(Project::class, 'projectId');
     }
-    public function category(){
-        return $this->belongsTo(Category::class,'categoryId');
+
+    /**
+     * Define a relationship between Task and Category models.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
+    {
+        // Define a many-to-one relationship where a task belongs to a category
+        return $this->belongsTo(Category::class, 'categoryId');
     }
-    static public function getTask(){
-        $return = Task::where('userId',null)->paginate(5);
+
+    /**
+     * Retrieve tasks, optionally filtered by name, with pagination.
+     *
+     * @return \Illuminate\Contracts\Pagination\Paginator
+     */
+    public static function getTask()
+    {
+        // Retrieve tasks with pagination where userId is null
+        $return = Task::where('userId', null)->paginate(5);
+
+        // Check if 'name' parameter is present in the request
         if (!empty(Request::get('name'))){
-            $return = Task::get()->where('name','=',Request::get('name'));
+            // Filter tasks by name
+            $return = Task::where('name', Request::get('name'))->paginate(5);
         }
         return $return;
     }
-    static public function getMyTask(){
-        $return = Task::where('userId',Auth::user()->id)->paginate(5);
+
+    /**
+     * Retrieve tasks assigned to the current authenticated user, optionally filtered by name, with pagination.
+     *
+     * @return \Illuminate\Contracts\Pagination\Paginator
+     */
+    public static function getMyTask()
+    {
+        // Retrieve tasks assigned to the current authenticated user with pagination
+        $return = Task::where('userId', Auth::user()->id)->paginate(5);
+
+        // Check if 'name' parameter is present in the request
         if (!empty(Request::get('name'))){
-            $return = Task::get()->where('name','=',Request::get('name'));
+            // Filter tasks by name
+            $return = Task::where('name', Request::get('name'))->paginate(5);
         }
         return $return;
     }
-    static public function getSingle($id){
+
+    /**
+     * Retrieve a single task by its ID.
+     *
+     * @param int $id
+     * @return Task|null
+     */
+    public static function getSingle($id)
+    {
         return self::find($id);
     }
 
-    public static function isFinish(){
+    /**
+     * Determine if a task is finished.
+     *
+     * @return int
+     */
+    public static function isFinish()
+    {
         return Project::where('statusId', 2)->count();
     }
 
-    public static function UserTaskIsFinish($id){
+    /**
+     * Calculate the number of tasks finished by a specific user.
+     *
+     * @param int $id
+     * @return int
+     */
+    public static function UserTaskIsFinish($id)
+    {
         $all = Task::all()->where('userId', $id);
         $isFinish = $all->where('statusId', 2)->count();
-        if ($all->count() != 0) {
-            return $isFinish;
-        } else {
-            return 0; // або будь-яке інше значення за замовчуванням
-        }
+        return $all->count() != 0 ? $isFinish : 0;
     }
-    public static function percentProductivity(){
+
+    /**
+     * Calculate the percentage of task productivity.
+     *
+     * @return int
+     */
+    public static function percentProductivity()
+    {
         $all = Task::all()->count();
         $isFinish = Task::where('statusId', 2)->count();
         return round($isFinish * 100 / $all);
-
     }
-    public static function percentOfProjectProductivity($id){
+
+    /**
+     * Calculate the percentage of project productivity based on completed tasks.
+     *
+     * @param int $id
+     * @return int
+     */
+    public static function percentOfProjectProductivity($id)
+    {
         $all = Task::all()->where('projectId', $id);
         $isFinish = $all->where('statusId', 2)->count();
-        if ($all->count() != 0) {
-            return round($isFinish * 100 / $all->count());
-        } else {
-            return 0; // або будь-яке інше значення за замовчуванням
-        }
-
+        return $all->count() != 0 ? round($isFinish * 100 / $all->count()) : 0;
     }
-    public static function taskInProgres(){
+
+    /**
+     * Calculate the percentage of tasks in progress.
+     *
+     * @return int
+     */
+    public static function taskInProgres()
+    {
         $all = Task::all()->count();
         $inProgres = Task::where('statusId', 1)->count();
         return round($inProgres * 100 / $all);
     }
-    public static function taskWaiting(){
+
+    /**
+     * Calculate the percentage of tasks waiting for action.
+     *
+     * @return int
+     */
+    public static function taskWaiting()
+    {
         $all = Task::all()->count();
         $inWaiting = Task::where('statusId', 3)->count();
         return round($inWaiting * 100 / $all);
-
     }
 }

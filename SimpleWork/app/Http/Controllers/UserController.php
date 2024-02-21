@@ -9,13 +9,18 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    // Method to display all users
     public function users(){
         $userAll = User::getUser();
         return view('user.users', compact('userAll'));
     }
+
+    // Method to display the form for adding a user
     public function addUser(){
         return view('user.addUser');
     }
+
+    // Method to display the form for editing a user's profile
     public function userEditProfile($id){
         $data['getRecord'] = User::getSingle($id);
         if (!empty($data['getRecord'])){
@@ -26,6 +31,7 @@ class UserController extends Controller
         }
     }
 
+    // Method to display the form for editing the currently logged-in user's profile
     public function userEditMyProfile(){
         $data['getRecord'] = User::getSingle(Auth::id());
         if (!empty($data['getRecord'])) {
@@ -34,6 +40,8 @@ class UserController extends Controller
             return back();
         }
     }
+
+    // Method to display the form for editing a user
     public function editUser($id){
         $data['getRecord'] = User::getSingle($id);
         if (!empty($data['getRecord'])){
@@ -43,6 +51,8 @@ class UserController extends Controller
             return back();
         }
     }
+
+    // Method to display detailed information about a user
     public function userInfo($id){
         $data['getRecord'] = User::getSingle($id);
         if (!empty($data['getRecord'])){
@@ -52,6 +62,8 @@ class UserController extends Controller
             return back();
         }
     }
+
+    // Method to add a new user
     public function addUserMain(UserRequest $request){
         $review = new User();
         $review->firstname = $request->input('firstname');
@@ -63,6 +75,8 @@ class UserController extends Controller
         $review->save();
         return redirect()->route('users');
     }
+
+    // Method to edit an existing user
     public function editUserMain($id,UserRequest $request){
         $review = User::getSingle($id);
         $review->firstname = $request->input('firstname');
@@ -73,11 +87,15 @@ class UserController extends Controller
         $review->save();
         return redirect()->route('users');
     }
+
+    // Method to delete a user
     public function deleteUser($id){
         $review = User::getSingle($id);
         $review->delete();
         return redirect()->route('users');
     }
+
+    // Method to edit a user's profile picture
     public static function editPhoto($id,$name){
         $review = User::getSingle($id);
         $review->picture = $name;
@@ -91,5 +109,4 @@ class UserController extends Controller
             return back();
         }
     }
-
 }

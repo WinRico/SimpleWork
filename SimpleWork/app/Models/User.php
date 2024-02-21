@@ -2,47 +2,79 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Request;
 use Laravel\Sanctum\HasApiTokens;
-use function Laravel\Prompts\error;
 
 class User extends Authenticatable
 {
-
     use HasApiTokens, HasFactory, Notifiable;
-    public $timestamps = false;
-    public function task(){
 
+    // Disable timestamps for this model
+    public $timestamps = false;
+
+    /**
+     * Define a many-to-many relationship between User and Task models.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function task()
+    {
+        // Define a many-to-many relationship where a user belongs to many tasks
         return $this->belongsToMany(Task::class, 'userId');
     }
-    public function role(){
-        return $this->belongsTo(Role::class,'roleId');
+
+    /**
+     * Define a relationship between User and Role models.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function role()
+    {
+        // Define a many-to-one relationship where a user belongs to a role
+        return $this->belongsTo(Role::class, 'roleId');
     }
-    static public function getSingle($id)
+
+    /**
+     * Retrieve a single user by their ID.
+     *
+     * @param int $id
+     * @return User|null
+     */
+    public static function getSingle($id)
     {
         return self::find($id);
     }
-    static public function getUser(){
+
+    /**
+     * Retrieve users, optionally filtered by first name or last name, with pagination.
+     *
+     * @return \Illuminate\Contracts\Pagination\Paginator
+     */
+    public static function getUser()
+    {
         $return = User::paginate(10);
+
+        // Check if 'firstname' and 'lastname' parameters are present in the request
         if (!empty(Request::get('firstname')) && !empty(Request::get('lastname'))) {
-            if (User::get()->where('lastname', '=', Request::get('lastname'))->where('firstname', '=', Request::get('firstname'))) {
-                $return = User::get()->where('lastname', '=', Request::get('lastname'))->where('firstname', '=', Request::get('firstname'));
-            }
-        }
-        else if (!empty(Request::get('firstname'))){
-            $return = User::get()->where('firstname','=',Request::get('firstname'));
-        }
-        else  if (!empty(Request::get('lastname'))){
-            $return = User::get()->where('lastname','=',Request::get('lastname'));
+            // Filter users by both first name and last name
+            $return = User::where('lastname', Request::get('lastname'))
+                ->where('firstname', Request::get('firstname'))
+                ->get();
+        } elseif (!empty(Request::get('firstname'))) {
+            // Filter users by first name
+            $return = User::where('firstname', Request::get('firstname'))->get();
+        } elseif (!empty(Request::get('lastname'))) {
+            // Filter users by last name
+            $return = User::where('lastname', Request::get('lastname'))->get();
         }
 
         return $return;
     }
+
     /**
      * The attributes that are mass assignable.
      *

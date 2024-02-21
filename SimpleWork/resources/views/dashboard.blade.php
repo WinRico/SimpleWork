@@ -7,15 +7,17 @@
 use \Illuminate\Support\Facades\Request;
 ?>
         <div id="page-content">
+            <i data-feather="circle"></i>
+
             <!-- Container fluid -->
             <div class="bg-primary pt-10 pb-21"></div>
             <div class="container-fluid mt-n22 px-6">
 
-                <div class="row">
+                <div class="row" style="background: white;margin: auto;border-radius: 0.5rem;height: 220px;">
                     <div class="col-lg-12 col-md-12 col-12">
                         <!-- Page header -->
                         <div>
-                            <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center" style="margin-top: 10px">
                                 <div>
                                     <a href="#" style="margin-bottom: 4px" class="btn btn-sm btn-outline-secondary">Створити Новий Проект</a>
                                 </div>
@@ -29,7 +31,7 @@ use \Illuminate\Support\Facades\Request;
                             <div class="card-body">
                                 <!-- heading -->
                                 <div class="d-flex justify-content-between align-items-center
-                    mb-3">
+                    mb-3" style="margin-top: 10px">
                                     <div>
                                         <h4 class="mb-0">Проекти</h4>
                                     </div>
@@ -53,7 +55,7 @@ use \Illuminate\Support\Facades\Request;
                             <div class="card-body">
                                 <!-- heading -->
                                 <div class="d-flex justify-content-between align-items-center
-                    mb-3">
+                    mb-3" style="margin-top: 10px">
                                     <div>
                                         <h4 class="mb-0">Активні завдання</h4>
                                     </div>
@@ -77,7 +79,7 @@ use \Illuminate\Support\Facades\Request;
                             <div class="card-body">
                                 <!-- heading -->
                                 <div class="d-flex justify-content-between align-items-center
-                    mb-3">
+                    mb-3" style="margin-top: 10px">
                                     <div>
                                         <h4 class="mb-0">Працівники</h4>
                                     </div>
@@ -103,7 +105,7 @@ use \Illuminate\Support\Facades\Request;
                             <div class="card-body">
                                 <!-- heading -->
                                 <div class="d-flex justify-content-between align-items-center
-                    mb-3">
+                    mb-3" style="margin-top: 10px">
                                     <div>
                                         <h4 class="mb-0">Продуктивність</h4>
                                     </div>
@@ -122,7 +124,7 @@ use \Illuminate\Support\Facades\Request;
                     </div>
                 </div>
                 <!-- row  -->
-                <div class="row mt-6">
+                <div class="row mt-6" >
                     <div class="col-md-12 col-12">
                         <!-- card  -->
                         <div class="card">
@@ -207,7 +209,7 @@ use \Illuminate\Support\Facades\Request;
                                               <span class="avatar avatar-sm">
                                                  <img alt="avatar"
                                                       src="{{asset('storage/news/' . $task->user->picture)}}"
-                                                      class="rounded-circle" alt="avatar 1" style="width: 35px; border-radius: 1px; border-color: #3b7ddd">
+                                                      class="rounded-circle" alt="avatar 1" style="width: 35px; height: 35px; border-radius: 35px; border-color: #3b7ddd">
                                           </span>
                                                 @endif
                                             @endforeach
@@ -254,7 +256,9 @@ use \Illuminate\Support\Facades\Request;
                                     </div>
                                     <!-- dropdown  -->
                                     <div class="dropdown dropstart">
-                                        <a class="text-muted text-primary-hover" href="#" role="button" id="dropdownTask" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a class="text-muted text-primary-hover" href="#"
+                                           role="button" id="dropdownTask" data-bs-toggle="dropdown"
+                                           aria-haspopup="true" aria-expanded="false">
                                             <i class="icon-xxs" data-feather="more-vertical"></i>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownTask">
@@ -272,17 +276,18 @@ use \Illuminate\Support\Facades\Request;
                                 <div class="d-flex align-items-center justify-content-around">
                                     <div class="text-center" >
                                         <i class="icon-sm text-success" data-feather="check-circle"></i>
-                                        <h1 class="mt-3  mb-1 fw-bold" ><text>{{$task->percentProductivity()}}</text>%</h1>
+                                        <h1 class="mt-3  mb-1 fw-bold" >{{$task->percentProductivity()}}%</h1>
                                         <p>Виконано</p>
                                     </div>
                                     <div class="text-center">
                                         <i class="icon-sm text-warning" data-feather="trending-up"></i>
-                                        <h1 class="mt-3  mb-1 fw-bold"><text>{{$task->taskWaiting()}}</text>%</h1>
+                                        <h1 class="mt-3  mb-1 fw-bold">{{$task->taskWaiting()}}%</h1>
                                         <p>В очікуванні</p>
                                     </div>
                                     <div class="text-center">
-                                        <i class="icon-sm text-warning" data-feather="trending-up"></i>
-                                        <h1 class="mt-3  mb-1 fw-bold"><text>{{$task->taskInProgres()}}</text>%</h1>
+                                    <i class="icon-sm text-danger"
+                                       data-feather="trending-down"></i>
+                                        <h1 class="mt-3 fw-bold mb-1">{{$task->taskInProgres()}}%</h1>
                                         <p>В процесі</p>
 
                                     </div>

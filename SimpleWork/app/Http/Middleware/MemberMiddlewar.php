@@ -16,7 +16,9 @@ class MemberMiddlewar
      */
     public function handle(Request $request, Closure $next): Response{
         if (!empty(Auth::check())){
-            if (Auth::user()->roleId >= 1 && Auth::user()->roleId < 5){
+            if (Auth::user()->roleId >= 1 && Auth::user()->roleId < 5 ){
+                return $next($request);
+            }else if (Auth::user()->roleId == 7){
                 return $next($request);
             }else{
                 Auth::logout();

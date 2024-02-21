@@ -10,8 +10,18 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Category extends Model
 {
     use HasFactory;
+
+    // Disable timestamps for this model
     public $timestamps = false;
-    public function task(){
-        return $this->belongsTo(Task::class,'categoryId');
+
+    /**
+     * Define a one-to-many relationship between Category and Task models.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tasks(): HasMany
+    {
+        // A category has many tasks
+        return $this->hasMany(Task::class, 'categoryId');
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\FreelanceController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\MainController;
@@ -26,17 +27,18 @@ Route::get('translation', function (\Illuminate\Http\Request $request){
         'hello' => trans('base.hello',[$name],$lang)
         ]);
 });
-Route::get('/info/user/{id}', [UserController::class, 'userInfo'])->name('userInfo');
+
 Route::get('/task', [TaskController::class, 'task'])->middleware('auth')->name('task');
 Route::get('/login', [LoginController::class, 'auth'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
-Route::get('/info/task/{id}',  [TaskController::class, 'infoTask'])->name('infoTask');
-
+Route::get('/edit/profile',  [UserController::class, 'userEditMyProfile'])->name('userEditMyProfile')->middleware('auth');;
+Route::get('/scrum',  [TaskController::class, 'SCRUM'])->name('SCRUM');
+Route::get('/chat',  [ChatController::class, 'chat'])->name('chat');
 Route::post('/edit/photo/{id}',  [Picture::class, 'cutPhoto']);
 Route::group(['middleware' => 'admin'], function (){
-    Route::get('/edit/profile',  [UserController::class, 'userEditMyProfile'])->name('userEditMyProfile');
-    Route::get('/',  [MainController::class, 'dashboard'])->name('dashboard');
+
+    Route::get('/',  [MainController::class, 'dashboard']);
     Route::get('/dashboard',  [MainController::class, 'dashboard'])->name('dashboard');
     Route::get('/users',  [UserController::class, 'users'])->name('users');
     Route::get('/addUser',  [UserController::class, 'addUser'])->name('addUser');
@@ -51,16 +53,28 @@ Route::group(['middleware' => 'admin'], function (){
     Route::get('/edit/task/{id}',  [TaskController::class, 'editTask'])->name('editTask');
     Route::post('/edit/task/{id}',  [TaskController::class, 'editTaskMain']);
     Route::get('/delete/task/{id}',  [TaskController::class, 'deleteTask'])->name('deleteTask');
+
+    Route::get('/info/user/{id}', [UserController::class, 'userInfo'])->name('userInfo');
+    Route::get('/info/task/{id}',  [TaskController::class, 'infoTask'])->name('infoTask');
+
 });
 Route::group(['middleware' => 'Member'], function (){
-    Route::get('/edit/profile',  [UserController::class, 'userEditMyProfile'])->name('userEditMyProfile');
-    Route::get('/',  [MainController::class, 'dashboard'])->name('dashboard');
     Route::get('/memberDashboard',  [MainController::class, 'dashboard'])->name('memberDashboard');
     Route::get('/myTask',  [TaskController::class, 'myTask'])->name('myTask');
+    Route::post('/test/task/{id}',  [TaskController::class, 'testTask']);
+    Route::get('/back/task/{id}',  [TaskController::class, 'backTask']);
+    Route::get('/end/task/{id}',  [TaskController::class, 'endTask']);
+    Route::get('/info/task/{id}',  [TaskController::class, 'infoTask'])->name('infoTask');
+
+
+
 });
 Route::group(['middleware' => 'Freelancer'], function (){
     Route::get('/',  [FreelanceController::class, 'freeDashboard'])->name('freeDashboard');
     Route::get('/freelanceDashboard',  [FreelanceController::class, 'freeDashboard'])->name('freeDashboard');
     Route::get('/openTask',  [FreelanceController::class, 'openTask'])->name('openTask');
+});
+Route::group(['common' => 'common'], function (){
+    Route::get('/chat',  [ChatController::class, 'chat'])->name('freeDashboard');
 });
 

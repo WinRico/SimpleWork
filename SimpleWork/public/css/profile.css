@@ -1,5 +1,6 @@
-body{
-    background: #f7f7ff;
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #c6d1d9;
 }
 .card {
     position: relative;

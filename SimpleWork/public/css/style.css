@@ -22,6 +22,7 @@ h1 {
 
 body {
     font-family: 'Poppins', sans-serif;
+     background: #c6d1d9;
 }
 
 .wrapper {
@@ -48,8 +49,6 @@ body {
 .smooth-shadow-lg {
     box-shadow: 0 1px 1px rgba(21, 30, 40, 0.11), 0 2px 2px rgba(21, 30, 40, 0.11), 0 4px 4px rgba(21, 30, 40, 0.11), 0 8px 8px rgba(21, 30, 40, 0.11), 0 16px 16px rgba(21, 30, 40, 0.11), 0 32px 32px rgba(21, 30, 40, 0.11) !important; }
 
-.bg-primary {
-    background-color: #624BFF !important; }
 
 .bg-secondary {
     background-color: #6c757d !important; }
@@ -75,8 +74,8 @@ body {
 .bg-white {
     background-color: #fff !important; }
 
-.bg-light-primary {
-    background-color: #E0DCFE !important; }
+/*.bg-light-primary {
+    background-color: #E0DCFE !important; }*/
 
 .bg-light-danger {
     background-color: #FBEBEC !important; }
@@ -96,8 +95,7 @@ body {
 .bg-light-dark {
     background-color: #d1cfd8 !important; }
 
-.bg-dark-primary {
-    background-color: #593cc1 !important; }
+
 
 .bg-dark-warning {
     background-color: #c28135 !important; }
@@ -334,7 +332,6 @@ a.sidebar-link:hover {
 }
 
 .form-container .form-icon{
-    color: #ac40ab;
     font-size: 55px;
     text-align: center;
     line-height: 100px;
@@ -389,7 +386,6 @@ a.sidebar-link:hover {
 
 .form-container .form-horizontal .btn{
     color: #000;
-    background-color: #ac40ab;
     font-size: 15px;
     font-weight: bold;
     text-transform: uppercase;
@@ -545,7 +541,6 @@ a.sidebar-link:hover {
 .pagination{
     float: right;
     padding: 10px;
-    margin: auto
-;
+    margin: auto;
 }
-
+.la {font-size: 60px}

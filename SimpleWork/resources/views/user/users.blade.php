@@ -70,7 +70,7 @@
                             </div>
                         </td>
                         <td class="align-middle" >{{$users->email}}<p class="mb-0"></p></td>
-                        <td class="align-middle" >{{$users->getRole($users->roleId)}}<p class="mb-0"></p></td>
+                        <td class="align-middle" >{{$users->role->role}}<p class="mb-0"></p></td>
                         <td class="align-middle">3 May, 2023</td>
                         <td class="align-middle"><a href="{{url('/infoUser/' . $users->id)}}"  class="btn btn-sm btn-outline-secondary">Більше</a>
                         </td>
